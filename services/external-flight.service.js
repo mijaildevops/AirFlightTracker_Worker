@@ -1,5 +1,7 @@
 const axios = require('axios');
 const { DateTime } = require('luxon');
+const dotenv = require('dotenv').config(); 
+
 
 function getCurrentDateTime() {
   const now = DateTime.local();
@@ -8,7 +10,7 @@ function getCurrentDateTime() {
 }
 
 const getNewFlightStatus = async(limit, flight_status=null, airline_iata=null, arr_scheduled_time_dep=null) => {
-  const accessKey = '4109add0f9aa94b8aedfe96811bf7cab';
+  const accessKey = process.env.ACCESSKEY;
   const currentDateTime = getCurrentDateTime();
   console.log(` - Get New Flight Status:  ${currentDateTime}`)
   //
