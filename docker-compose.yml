@@ -13,5 +13,5 @@ services:
     ports:
       - "7000:7000"
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
       DEBUG: nodejs-docker-express:*
