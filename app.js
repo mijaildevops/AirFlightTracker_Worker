@@ -25,6 +25,7 @@ const getFlightService = async () => {
         // update
         await Models.FlightModel.updateMany({}, { active: false });
         await Models.AirlinesModel.updateMany({}, { active: false });
+        await Models.RoutesModel.updateMany({}, { active: false });
         //
         const processFlights = await Promise.all(
             flights.map(async (flight) => {
@@ -33,7 +34,7 @@ const getFlightService = async () => {
                 let key = `${flightNumber}_${route}`
                 console.log(`    - Process key: ${key}`)
                 // save flight
-                const saveFlight = new Models.FlightModel({ requestId: requestId, flights:  flights, key: key, active: true});
+                const saveFlight = new Models.FlightModel({ requestId: requestId, flights:  flight, key: key, active: true});
                 await saveFlight.save();
                 // airlines
                 const airlineStatus = await  Models.AirlinesModel.findOne({ name: flight.airline.name }).exec()
@@ -45,6 +46,11 @@ const getFlightService = async () => {
                     const saveAirline = new Models.AirlinesModel({ name: flight.airline.name, iata:  flight.airline.iata, icao: flight.airline.icao, active:true});
                     await saveAirline.save();
                 }
+                // Routes
+                //const routeStatus = await  Models.RoutesModel.findOne({ name: flight.airline.name }).exec()
+                const saveRoute = new Models.RoutesModel({ departure: {'airport': flight.departure.airport, 'iata': flight.departure.iata}, arrival: {'airport': flight.arrival.airport, 'iata': flight.arrival.iata}, active: true});
+                await saveRoute.save();
+                
             })
         )
     } catch (error) {

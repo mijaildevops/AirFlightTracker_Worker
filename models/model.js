@@ -23,14 +23,24 @@ const AirlinesSchema = new mongoose.Schema({
     active: {type:String, require: true},
 });
 
+// Route Modal Schema
+const RoutesSchema = new mongoose.Schema({
+    departure: {}, 
+    arrival:{},
+    active: {type:Boolean, require: true},
+});
+
+
 // Creating model objects
 const ExternalFlightModel = mongoose.model('External_flight', ExternalFlightsSchema);
 const FlightModel = mongoose.model('Flight', FlightsSchema);
 const AirlinesModel = mongoose.model('Airlines', AirlinesSchema);
+const RoutesModel = mongoose.model('Routes', RoutesSchema);
   
 // Exporting our model objects
 module.exports = {
     ExternalFlightModel, 
     FlightModel, 
     AirlinesModel,
+    RoutesModel,
 }
